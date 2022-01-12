@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-deployment
+  namespace: app-system
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      component: server
+  template:
+    metadata:
+      labels:
+        # By using selector label and template label, 
+        # the Deployment will know how to identify
+        # the pods that he has to manage.
+        component: server
+    spec:
+      containers:
+        - name: client
+          image: mroobert/multi-server
+          ports:
+            - containerPort: 5000
