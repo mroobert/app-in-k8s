@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-cluster-ip-service
+  namespace: app-system
+spec:
+  type: ClusterIP
+  selector:
+     # By using selector section, the service will properly
+     # select the postgres deployment => postgres pods
+    component: postgres
+  ports:
+    # Exposes the service within the cluster on the port 5432.
+    # Other pods within the cluster can communicate with
+    # the service on the specified port.
+    - port: 5432
+      # This is the port on which the service will send requests to,
+      # that the postgres pod will be listening on. The app inside the
+      # container will need to be listening on this specified port.
+      targetPort: 5432

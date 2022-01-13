@@ -1,26 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: worker-deployment
+  name: redis-deployment
   namespace: app-system
 spec:
   replicas: 1
   selector:
     matchLabels:
-      component: worker
+      component: redis
   template:
     metadata:
       labels:
         # By using selector label and template label, 
         # the Deployment will know how to identify
         # the pods that he has to manage.
-        component: worker
+        component: redis
     spec:
       containers:
-        - name: client
-          image: mroobert/multi-worker
-          env:
-            - name: REDIS_HOST
-              value: redis-cluster-ip-service
-            - name: REDIS_PORT
-              value: '6379'
+        - name: redis
+          image: redis
+          ports:
+            - containerPort: 6379 # default port of redis

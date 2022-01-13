@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres-deployment
+  namespace: app-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: postgres
+  template:
+    metadata:
+      labels:
+        # By using selector label and template label, 
+        # the Deployment will know how to identify
+        # the pods that he has to manage.
+        component: postgres
+    spec:
+      volumes:
+        - name: postgres-storage
+          persistentVolumeClaim:
+            claimName: database-persistent-volume-claim
+      containers:
+        - name: postgres
+          image: postgres
+          ports:
+            - containerPort: 5432 # default port of postgres
+          volumeMounts:
+            - name: postgres-storage
+              # Shows where the referenced volume should be mounted in the container.
+              mountPath: /var/lib/postgresql/data
+              # This will be a folder inside the PV. Under this folder the data
+              # from the mountPath will be saved.
+              # It is a postgres specific requirement to not use the root folder 
+              # of mounted volume as postgresql data dir.
+              subPath: postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                    name: pg-password
+                    key: PGPASSWORD  
+
+
+
+   
