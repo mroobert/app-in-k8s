@@ -17,7 +17,7 @@ spec:
         component: worker
     spec:
       containers:
-        - name: client
+        - name: worker
           image: mroobert/multi-worker
           env:
             - name: REDIS_HOST

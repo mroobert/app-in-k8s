@@ -17,7 +17,7 @@ spec:
         component: server
     spec:
       containers:
-        - name: client
+        - name: server
           image: mroobert/multi-server
           ports:
             - containerPort: 5000
