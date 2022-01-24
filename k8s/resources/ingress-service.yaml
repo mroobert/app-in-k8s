@@ -2,6 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-service
+  namespace: app-system
   annotations:
     # is telling k8s to create an ingress controller based on nginx
     kubernetes.io/ingress.class: 'nginx'
