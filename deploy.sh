@@ -13,6 +13,6 @@ docker push mroobert/multi-worker:$SHA
 kubectl apply -f ./k8s/namespace.yaml
 kubectl apply -f ./k8s/resources
 
-kubectl set image deployment/client-deployment client=mroobert/multi-client:$SHA -n app-system
-kubectl set image deployment/server-deployment server=mroobert/multi-server:$SHA -n app-system
-kubectl set image deployment/worker-deployment worker=mroobert/multi-worker:$SHA -n app-system
+kubectl set image deployment/client-deployment client=mroobert/multi-client:$SHA -n $NAMESPACE
+kubectl set image deployment/server-deployment server=mroobert/multi-server:$SHA -n $NAMESPACE
+kubectl set image deployment/worker-deployment worker=mroobert/multi-worker:$SHA -n $NAMESPACE
