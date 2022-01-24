@@ -13,7 +13,7 @@ before_install:
   - gcloud auth activate-service-account --key-file service-account.json
   - gcloud config set project app-in-k8s
   - gcloud config set compute/zone europe-central2-a
-  - gcloud container clusters get-credentials app-in-k8s
+  - gcloud container clusters get-credentials app-cluster
   - docker login -u "$DOCKER_USERNAME" -p  "$DOCKER_PASSWORD"
   - docker build -t mroobert/react-test -f ./client/Dockerfile.dev ./client
 script: 
