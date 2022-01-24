@@ -10,13 +10,24 @@ kind-up:
 		--name $(KIND_CLUSTER) \
 		--config kind/kind-config.yaml
 	kubectl config set-context --current --namespace=app-system
-	
+
+kind-down:
+	kind delete cluster --name $(KIND_CLUSTER)
+
+# Load app resources in the cluster
 ingress-up:
 	kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
 	kubectl wait --namespace ingress-nginx \
   --for=condition=ready pod \
   --selector=app.kubernetes.io/component=controller \
   --timeout=120s
+  
+resources-up:
+	kubectl apply -f ./k8s/namespace.yaml
+	kubectl create secret generic pg-password --namespace=app-system --from-literal PGPASSWORD=abcdef
+	kubectl apply -f ./k8s/resources
 
-kind-down:
-	kind delete cluster --name $(KIND_CLUSTER)
+
+
+
+
